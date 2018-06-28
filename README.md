@@ -1,7 +1,6 @@
 # Coursera's Machine Learning Course assignments in Python.
----
 
-## DISCLAIMER 1 
+## DISCLAIMER
 Work in progress, I still have to decide if I will make a whole grader or just make the functions. We'll see.
 
 This is only for reference, you should first try your best and only then look at the solutions. You should only see the solutions 
