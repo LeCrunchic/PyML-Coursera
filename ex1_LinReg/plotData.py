@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
 
-#Build a function that makes a scatterplot
-
-plt.plot()
+def leplot(ax, x , y, param_dict):
+    out = ax.plot(x, y, **param_dict)
+    return out
