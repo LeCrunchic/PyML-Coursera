@@ -23,6 +23,7 @@ def main():
     plt.show()                                                       
 
     #============== Part 3 Cost and Gradient descent =============#
+    
     m = X.shape[0] #number of training examples
     ones = np.ones((m,1))
     X = np.concatenate((ones, X), axis=1) # add column of ones to X
@@ -34,8 +35,9 @@ def main():
 
     print('Running cost function...')
     J = computeCost(X, Y, theta)
-    print(f'With parameters:\n {theta}. The cost is:\n {J}')
+    print(f'With parameters:\n {theta}.\nThe cost is: {J}')
     input('Press enter to continue...')
+    
 
 if __name__ == "__main__":
     main()
