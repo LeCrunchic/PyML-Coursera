@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 from warmUp import identity_warmup
-from plotData import leplot
 from cost import computeCost
 from gradientDescent import leGradientDescent
 
@@ -70,8 +69,14 @@ def main():
     fig = plt.figure()
     ax = fig.add_subplot('111', projection='3d')
     ax.plot_surface(theta0_values, theta1_values, J_values)
-    ax.text('Theta 0', 'Theta 1', 'Cost', 'CULO')
     plt.show()
+
+    print('Remember to close the figure. Otherwise, the process will not continue.')
+    fig = plt.figure()
+    ax = fig.add_subplot('111')
+    ax.contour(theta0_values, theta1_values, J_values)
+    plt.show()
+
     
 
 if __name__ == "__main__":
