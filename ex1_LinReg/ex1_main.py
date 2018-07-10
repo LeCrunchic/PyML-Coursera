@@ -65,16 +65,23 @@ def main():
             this_theta = np.array([[iv], [jv]])
             J_values[i, j] = computeCost(X, Y, this_theta) 
     
+    print(J_values[0,0])
+    print(J_values[0,1])
+    print(J_values[1,0])
+
+    J_values = J_values.T
+    
     print('Remember to close the figure. Otherwise, the process will not continue.')
+    theta0Mesh, theta1Mesh = np.meshgrid(theta0_values, theta1_values)
     fig = plt.figure()
     ax = fig.add_subplot('111', projection='3d')
-    ax.plot_surface(theta0_values, theta1_values, J_values)
+    ax.plot_surface(theta0Mesh, theta1Mesh, J_values, cmap='jet')
     plt.show()
 
     print('Remember to close the figure. Otherwise, the process will not continue.')
     fig = plt.figure()
     ax = fig.add_subplot('111')
-    ax.contour(theta0_values, theta1_values, J_values)
+    ax.contour(theta0_values, theta1_values, J_values, np.logspace(-2, 3, 20))
     plt.show()
 
     
