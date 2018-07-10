@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 from warmUp import identity_warmup
-from plotData import leplot
 from cost import computeCost
 from gradientDescent import leGradientDescent
 
