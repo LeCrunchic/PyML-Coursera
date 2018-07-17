@@ -15,8 +15,9 @@ data = np.genfromtxt('data/ex1/ex1data2.txt', delimiter=',')
 X = data[:, 0:2]
 Y = data[:, [2]]
 
+
 print('Normalizing features...')
-mu, sigma, X_norm = normalize(X)
+mu, sigma, X_norm = normalize(X) 
 
 X_norm = np.concatenate((np.ones((X.shape[0], 1)), X_norm), axis=1)
 
@@ -31,7 +32,6 @@ parameters = np.array([[80000], [135], [-8000]])
 # Gradient Descent
 parameters, J_history = leGradientDescent(X_norm, Y, alpha, iterations, parameters, multi=True)
 
-print(J_history)
 # Plot of Cost
 print('Close the plot for the process to continue...')
 plt.plot(np.arange(len(J_history)), J_history)
