@@ -45,12 +45,12 @@ def plot_bounded_data(x, y, theta):
         x_plot = np.array([min(x[:, 1]), max(x[:, 1])])
         y_plot =  (-1. / theta[1]) * (theta[2] * x_plot + theta[0])
 
-        ax.scatter(x[posi, 1], x[posi, 2], marker='+', label='Score: First exam.')
-        ax.scatter(x[neg, 1], x[neg, 2], c='r' , marker='x', label='Score: Second exam.')
+        ax.scatter(x[posi, 1], x[posi, 2], marker='+', label='Admitted')
+        ax.scatter(x[neg, 1], x[neg, 2], c='r' , marker='x', label='Not Admitted')
         ax.plot(x_plot, y_plot, linestyle='--', c='g', label='Decision Boundary')
 
-        ax.xlabel('Score: First exam')
-        ax.ylabel('Score: Second exam')
+        ax.set_xlabel('Score: First exam')
+        ax.set_ylabel('Score: Second exam')
         ax.legend()
 
     else:
@@ -64,10 +64,13 @@ def plot_bounded_data(x, y, theta):
 
        z_plot = z_plot.T
 
-       ax.scatter(x[posi, 1], x[posi, 2], marker='+', label='Microchip test 1')
-       ax.scatter(x[neg, 1], x[neg, 2], c='r' , marker='x', label='Microchip test 2')
+       ax.scatter(x[posi, 1], x[posi, 2], marker='+', label='y == 1')
+       ax.scatter(x[neg, 1], x[neg, 2], c='r' , marker='x', label='y == 0')
        contour = ax.contour(x_plot, y_plot, z_plot, levels=0, colors='g')
        contour.collections[1].set_label('Decision Boundary')
+       
+       ax.set_xlabel('Microchip: Test 1')
+       ax.set_ylabel('Microchip: Test 2')
        ax.legend()
 
     plt.show()

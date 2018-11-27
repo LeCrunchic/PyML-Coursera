@@ -33,14 +33,14 @@ cost = compute_cost(initial_theta, X, Y)
 grad = compute_gradient(initial_theta, X, Y)
 
 print(f'Cost with initial parameters (all zeros): {cost}')
-print(f'Gradient with initial parameters:\n{grad}')
+print(f'Gradients with initial parameters:\n{grad}')
 
 test_theta = np.array([[-24],[0.2],[0.2]])
 cost = compute_cost(test_theta, X, Y)
 grad = compute_gradient(test_theta, X, Y)
 
 print(f'Cost with test parameters:\n{test_theta}\nCost:{cost}')
-print(f'Gradient with test parameters: \n{grad}')
+print(f'Gradients with test parameters: \n{grad}')
 
 input('Press enter to continue...')
 

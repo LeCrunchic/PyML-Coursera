@@ -22,7 +22,6 @@ plot_data(X, Y, xlabel, ylabel, legend)
 X = map_features(X[:, 0], X[:, 1])
 
 # ============= Run logistic regression ================ #
-import pdb; pdb.set_trace()
 initial_theta = np.zeros(X.shape[1])
 
 # Regularization Parameter: This dictates how much the cost function is penalized
