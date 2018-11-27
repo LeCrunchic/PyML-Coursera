@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from scipy.optimize import fmin_bfgs
 
 from utils import compute_cost, compute_gradient, plot_data, plot_bounded_data, sigmoid
-
 # Load Data
 data = np.genfromtxt('data/ex2/ex2data1.txt', delimiter=',')
 
@@ -17,9 +16,13 @@ print('Positive examples are plotted with a plus sign')
 print('Negative examples are plotted with an x')
 
 print('Remember to close the plot. Otherwise, the process does not continue')
-plot_data(X, Y)
+xlabel = 'Score: First Exam'
+ylabel = 'Score: Second Exam'
+legend = ['Admitted', 'Not admitted']
 
-# ============= Part 2: Compute cost and gradient ============== #
+plot_data(X, Y, xlabel, ylabel, legend)
+
+# ============= Part 2: Compute cost and gradient ============== #                                                         
 
 print('Calculating cost and gradient...')
 
@@ -51,6 +54,7 @@ fprime = partial(compute_gradient, x=X, y=Y)
 
 optimal_theta = fmin_bfgs(f, initial_theta, fprime, maxiter=400)
 print("theta after optimization:", optimal_theta)
+
 # Plotting w/decision boundary
 plot_bounded_data(X, Y, optimal_theta)
 
