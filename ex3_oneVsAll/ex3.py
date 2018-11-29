@@ -16,4 +16,8 @@ data = loadmat('data/ex3/ex3data1.mat')
 X = data['X']
 Y = data['y']
 
-display_data(X)
+m = X.shape[0]
+idx_array = np.arange(m)
+rand_indxs = np.random.choice(idx_array, size=100, replace=False)
+
+display_data(X[rand_indxs, :])
