@@ -6,3 +6,5 @@ share
 .vscode
 Scripts
 tests
+__pycache__
+*.pyc
