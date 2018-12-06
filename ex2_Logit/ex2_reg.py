@@ -1,3 +1,5 @@
+import pdb
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import fmin_bfgs
@@ -47,6 +49,8 @@ print(f'First 5 gradients with test theta\n{grad[:5].reshape(-1, 1)}')
 
 # now actually doing the regresion
 from functools import partial
+
+pdb.set_trace()
 
 f = partial(compute_cost, x=X, y=Y, regularized=True, lambda_=initial_lambda)
 fprime = partial(compute_gradient, x=X, y=Y, regularized=True, lambda_=initial_lambda)
