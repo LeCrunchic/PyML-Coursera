@@ -7,21 +7,39 @@ import matplotlib.pyplot as plt
 from scipy.optimize import fmin_bfgs
 from numpy import ix_
 
-def one_vs_all(x, y, num_labels, lambda_):
-    m, n = x.shape
-    all_theta = np.zeros((num_labels, n + 1))
-    x = np.hstack((np.ones((m, 1)), x))
+class OneVsAll:
+    def __init__(self, x, y, num_labels, lambda_):
+        self.x = x
+        self.y = y
+        self.num_labels = num_labels
+        self.lambda_ = lambda_
+        self.m, self.n = self.x.shape
 
-    initial_theta = np.zeros((n + 1, 1))
+    def fit(self):
+        all_theta = np.zeros((self.num_labels, self.n + 1))
+        x = np.hstack((np.ones((self.m, 1)), self.x))
 
-    for i in range(num_labels):
-        y_train = (y == i).flatten()
-        f = partial(compute_cost, x=x, y=y_train, regularized=True, lambda_=lambda_)
-        fprime = partial(compute_gradient, x=x, y=y_train, regularized=True, lambda_=lambda_)
-        i_theta = fmin_bfgs(f, initial_theta.flatten(), fprime, maxiter=50)
-        all_theta[i, :] = i_theta
+        initial_theta = np.zeros((self.n + 1, 1))
 
-    return all_theta
+        print('Training One vs all model...')
+
+        # The addition of one (line 28) is needed because the labels start from 1, python starts counting from 0.
+        for i in range(self.num_labels):
+            y_train = (self.y == (i + 1)).flatten()
+            f = partial(compute_cost, x=x, y=y_train, regularized=True, lambda_=self.lambda_)
+            fprime = partial(compute_gradient, x=x, y=y_train, regularized=True, lambda_=self.lambda_)
+            i_theta = fmin_bfgs(f, initial_theta.flatten(), fprime, maxiter=100)
+            all_theta[i, :] = i_theta
+
+        self.learned_theta = all_theta
+
+    def predict(self):
+        self.x = np.hstack((np.ones((self.m, 1)), self.x))
+
+        preds = sigmoid(self.x.dot(self.learned_theta.T))
+        argmax = np.argmax(preds, 1)
+
+        return argmax
 
 def compute_cost(theta, x, y, regularized=False, lambda_=None):
     m = y.shape[0]
@@ -88,7 +106,7 @@ def display_data(x, example_width=None):
             break
 
     plt.imshow(display_array, cmap='gray_r')
-    plt.show()
+    plt.show(block=False)
 
 def sigmoid(x):
     return 1. / (1. + np.exp(-x))
