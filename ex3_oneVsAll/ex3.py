@@ -2,9 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import loadmat
 
-from utils import display_data, compute_cost, compute_gradient, OneVsAll 
-# Defining neccesary parameters
-input_layer_size = 400 # 20x20 images
+from utils import display_data, compute_cost, compute_gradient, OneVsAll
+
 num_labels = 10
 
 # ========== Loading and Visualizing data ========== #

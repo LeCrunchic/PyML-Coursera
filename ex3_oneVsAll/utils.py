@@ -8,9 +8,9 @@ from scipy.optimize import fmin_bfgs
 from numpy import ix_
 
 class OneVsAll:
-    def __init__(self, x, y, num_labels, lambda_):
-        self.x = x
-        self.y = y
+    def __init__(self, X, Y, num_labels, lambda_):
+        self.x = X
+        self.y = Y
         self.num_labels = num_labels
         self.lambda_ = lambda_
         self.m, self.n = self.x.shape
@@ -37,9 +37,34 @@ class OneVsAll:
         self.x = np.hstack((np.ones((self.m, 1)), self.x))
 
         preds = sigmoid(self.x.dot(self.learned_theta.T))
-        argmax = np.argmax(preds, 1)
+        argmax = np.argmax(preds, axis=1)
 
         return argmax
+
+class NeuralNetwork:
+    """
+         Single hidden layer neural network w/ pre-trained weights
+    """
+    def __init__(self, x, y, w1, w2):
+        self.x = x
+        self.y = y
+        self.w1 = w1
+        self.w2 = w2
+
+    def predict(self, train=True, test_x=None):
+        if train:
+            x = self.x
+        else:
+            x = test_x
+
+        x = np.hstack( (np.ones((x.shape[0], 1)), x) )
+        Z1 = x.dot(self.w1.T)
+        a1 = np.hstack( ( np.ones((x.shape[0], 1)), sigmoid(Z1) ) )
+        Z2 = a1.dot(self.w2.T)
+        hx = sigmoid(Z2)
+
+        return np.argmax(hx, axis=1)
+
 
 def compute_cost(theta, x, y, regularized=False, lambda_=None):
     m = y.shape[0]
@@ -63,7 +88,6 @@ def compute_gradient(theta, x, y, regularized=False, lambda_=None):
         # Remember each row of x is a training example 
         if grad.ndim > 1:
             # This executes for the actual training, the first row of grad are the gradients of the bias 
-            pdb.set_trace()
             grad = np.vstack((grad[0, :], grad[1:, :] + reg_term[:, np.newaxis]))
         else:
             # This executes for the test, grad is flat here
