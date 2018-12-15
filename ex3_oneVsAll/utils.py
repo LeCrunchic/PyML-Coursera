@@ -118,8 +118,8 @@ def display_data(x, example_width=None):
 
             max_val = np.max(np.abs(x[current_ex, :]))
 
-            m_idxer = pad + (j-1) * (example_height + pad) + np.arange(0, example_height)
-            n_idxer = pad + (i-1) * (example_width + pad) + np.arange(0, example_width)
+            m_idxer = pad + j * (example_height + pad) + np.arange(0, example_height)
+            n_idxer = pad + i * (example_width + pad) + np.arange(0, example_width)
 
             display_array[ix_(m_idxer, n_idxer)] = \
                                   x[current_ex, :].reshape(example_height, example_width, order='F') / max_val
