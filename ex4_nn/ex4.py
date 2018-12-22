@@ -31,8 +31,8 @@ print('Loading Neural Network weights...')
 
 weights = loadmat('data/ex4/ex4weights.mat')
 
-W1 = weights['Theta1'].flatten()[:, np.newaxis]
-W2 = weights['Theta2'].flatten()[:, np.newaxis]
+W1 = weights['Theta1'].flatten(order='F')[:, np.newaxis]
+W2 = weights['Theta2'].flatten(order='F')[:, np.newaxis]
 
 #import pdb; pdb.set_trace()
 
@@ -76,4 +76,15 @@ initial_nn_params = np.hstack(( initial_theta1.flatten(), initial_theta2.flatten
 
 # =============== Check NN gradients =============== #
 
+check_nn_gradients()
+
+# ============= Backpropagation with regularization ============= #
+
+print('checking backpropagation w/ regularization')
+
 check_nn_gradients(lambda_=3)
+
+debug_J, _ = nn_cost_function(nn_params, input_layer_size, hidden_layer_size,
+                              num_labels, X, Y, lambda_=3)
+
+print(f'cost with lambda_ = 3, this value should be about 0.576051: {debug_J} ')

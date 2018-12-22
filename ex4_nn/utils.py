@@ -32,7 +32,6 @@ def check_nn_gradients(lambda_=0):
 
     nn_params = np.vstack(( W1, W2 ))
 
-    import pdb; pdb.set_trace()
     cost_func = partial(nn_cost_function, input_layer_size=input_layer_size,
                         hidden_layer_size=hidden_layer_size,
                         num_labels=num_labels, x=X, y=Y, lambda_=lambda_)
@@ -43,15 +42,16 @@ def check_nn_gradients(lambda_=0):
     numgrad_grad = list( zip(numgrad, grad) )
     pprint(numgrad_grad)
 
-    diff = np.linalg.norm(numgrad-grad) / np.linalg.norm(numgrad+grad)
+    diff = np.linalg.norm(numgrad-grad[:, np.newaxis]) / np.linalg.norm(numgrad+grad[:, np.newaxis])
+    import pdb; pdb.set_trace()
 
     print('difference (ought to be less than 1e-9):', diff)
 
 
 def compute_numerical_grad(J, theta):
 
-    numgrad = np.zeros(theta.shape)
-    perturb = np.zeros(theta.shape)
+    numgrad = np.zeros(theta.shape, dtype=float)
+    perturb = np.zeros(theta.shape, dtype=float)
 
     e = 1e-4
 
@@ -83,8 +83,9 @@ def nn_cost_function(nn_params, input_layer_size, hidden_layer_size, num_labels,
 
     UNTIL_W1 = hidden_layer_size * (input_layer_size + 1)
 
-    W1 = nn_params[:UNTIL_W1].reshape(hidden_layer_size, input_layer_size + 1)
-    W2 = nn_params[UNTIL_W1:].reshape(num_labels, hidden_layer_size + 1)
+    W1 = nn_params[:UNTIL_W1].reshape(hidden_layer_size, input_layer_size + 1, order='F')
+    W2 = nn_params[UNTIL_W1:].reshape(num_labels, hidden_layer_size + 1, order='F')
+
 
     m = x.shape[0]
 
@@ -99,15 +100,15 @@ def nn_cost_function(nn_params, input_layer_size, hidden_layer_size, num_labels,
     for i in range(m):
         vectorY[i, y[i]-1] = 1
 
-    J = -1/m * np.sum(np.sum(vectorY * np.log(hx) + (1 - vectorY) * np.log(1 - hx)))
+    J = (-1/m) * np.sum(np.sum(vectorY * np.log(hx) + (1 - vectorY) * np.log(1 - hx)))
 
 
     w1_no_bs = W1[:, 1:]
     w2_no_bs = W2[:, 1:]
-    weights_no_bs = np.hstack((w1_no_bs.flatten(), w2_no_bs.flatten()))
+    weights_no_bs = np.hstack((w1_no_bs.flatten(order='F'), w2_no_bs.flatten(order='F')))
 
     # Regularazion of Cost
-    J += lambda_/(2*m) * np.sum(weights_no_bs**2)
+    J += (lambda_/(2*m)) * np.sum(weights_no_bs**2)
 
     # Backpropagation
 
@@ -124,7 +125,7 @@ def nn_cost_function(nn_params, input_layer_size, hidden_layer_size, num_labels,
 
     w2_grad = np.hstack((w2_grad[:, [0]], w2_grad[:, 1:] + (lambda_/m) * w2_no_bs))
 
-    grad = np.hstack((w1_grad.flatten(), w2_grad.flatten()))
+    grad = np.hstack((w1_grad.flatten(order='F'), w2_grad.flatten(order='F')))
 
     return J, grad
 

@@ -8,4 +8,5 @@ Scripts
 tests
 __pycache__/
 *.py[cod]
+pyml-coursera
 
