@@ -43,7 +43,7 @@ def check_nn_gradients(lambda_=0):
     pprint(numgrad_grad)
 
     diff = np.linalg.norm(numgrad-grad[:, np.newaxis]) / np.linalg.norm(numgrad+grad[:, np.newaxis])
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
 
     print('difference (ought to be less than 1e-9):', diff)
 
