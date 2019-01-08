@@ -1,7 +1,5 @@
 # Coursera's Machine Learning Course assignments in Python.
 
-## DISCLAIMER
-Work in progress.
+Part of the exercises of the MOOC.
 
-This is only for reference, you should first try your best and only then look at the solutions. You should only see the solutions 
-after you are about to go crazy by the frustation. I mean it.
+This is only for reference, you should first try your best and only then look at the solutions.
